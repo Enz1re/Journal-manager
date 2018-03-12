@@ -1,0 +1,59 @@
+<mat-card class="header-container">
+	<div class="logo-container">
+		<img src="content/journal.png">
+	</div>
+	&nbsp;&nbsp;&nbsp;
+	<div class="app-name">
+		<h1>Менеджер журналов</h1>
+	</div>
+	<div class="search-input-container">
+		<mat-form-field class="input-full-width">
+		    <input matInput placeholder="Введите запрос...">
+	  	</mat-form-field>
+	  	&nbsp;&nbsp;&nbsp;
+	  	<div class="search-button-container">
+			<button mat-raised-button>Поиск</button>
+		</div>
+	</div>
+	<div class="year-select-container">
+		<mat-form-field>
+			<mat-select [(value)]="_selectedYear">
+				<mat-option *ngFor="let year of _years" [value]="year">{{year}}</mat-option>
+			</mat-select>
+	 	</mat-form-field>
+	</div>
+	<div class="login-container">
+		<a href="#">Войти</a>
+	</div>
+</mat-card>
+<mat-divider></mat-divider>
+<mat-sidenav-container #container>
+  	<mat-sidenav #sidenav mode="side" opened="true">
+  		<div class="sidenav-container">
+  			<div class="expansion-panel-container">
+	  			<mat-accordion>
+					<mat-expansion-panel *ngFor="let faculty of _faculties">
+					    <mat-expansion-panel-header>
+							<mat-panel-title>{{faculty.name}}</mat-panel-title>
+						</mat-expansion-panel-header>
+						<mat-accordion>
+							<mat-expansion-panel *ngFor="let discipline of faculty.disciplines">
+							    <mat-expansion-panel-header>
+									<mat-panel-title>{{discipline.name}}</mat-panel-title>
+								</mat-expansion-panel-header>
+								<mat-list>
+									<mat-list-item *ngFor="let group of discipline.groups">
+										<button mat-raised-button>{{group}} група</button>
+									</mat-list-item>
+								</mat-list>
+							</mat-expansion-panel>
+						 </mat-accordion>
+					</mat-expansion-panel>
+				 </mat-accordion>
+			</div>
+		</div>
+  	</mat-sidenav>
+  	<mat-sidenav-content class="container">
+    	<router-outlet></router-outlet>
+  	</mat-sidenav-content>
+</mat-sidenav-container>
