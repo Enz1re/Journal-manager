@@ -3,7 +3,7 @@ import { Injectable } from "@angular/core";
 import { Observable } from "rxjs/Observable";
 import 'rxjs/add/operator/map';
 
-import { Http } from "@angular/http";
+import { HttpClient } from "@angular/common/http";
 
 import { User } from "../models/User";
 
@@ -12,15 +12,21 @@ import { User } from "../models/User";
 export class AuthService {
     public currentUser: User;
 
-    constructor (private http: Http) {
-        
+    constructor (private http: HttpClient) {
+
     }
 
     logIn(username: string, password: string) {
-
+        if (username.toLowerCase() === 'admin' && password.toLowerCase() === 'admin') {
+            const user = new User(username, username, username);
+            this.currentUser = user;
+            return user;
+        } else {
+            return null;
+        }
     }
 
     logOff() {
-        
+
     }
 }

@@ -1,4 +1,10 @@
-import { Component } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
+import { ActivatedRoute } from "@angular/router";
+
+import { DomSanitizer } from '@angular/platform-browser';
+import { HttpService } from "../../services/http.service";
+
+import { Term } from "../../models/Term";
 
 
 @Component({
@@ -6,6 +12,30 @@ import { Component } from "@angular/core";
     templateUrl: "app/components/journal/journal.template.html",
     styleUrls: ["app/components/journal/journal.css"]
 })
-export class JournalComponent {
-    
+export class JournalComponent implements OnInit {
+    private _terms: Term[] = [];
+
+    constructor (private activatedRoute: ActivatedRoute, private sanitizer: DomSanitizer, private http: HttpService) {
+
+    }
+
+    sanitize(url: string) {
+        return this.sanitizer.bypassSecurityTrustResourceUrl(url);
+    }
+
+    ngOnInit() {
+        this.http.getYears().subscribe(years => {
+            this.http.getCurrentYear().subscribe(year => {
+                this.http.getFaculties(year).subscribe(faculties => {
+                    this.activatedRoute.params.subscribe(params => {
+                        var fac = +params['fac'];
+                        var disc = +params['disc'];
+                        var faculty = faculties.find(f => f.id === fac);
+                        var discipline = faculty.disciplines.find(d => d.id === disc);
+                        this._terms = discipline.terms;
+                    });
+                });
+            });
+        });
+    }
 }

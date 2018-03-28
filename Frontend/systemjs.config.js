@@ -38,7 +38,8 @@
       'tslib': 'npm:tslib/tslib.js',
       'traceur':'npm:traceur/bin',
       'rxjs': 'npm:rxjs',
-      'angular-in-memory-web-api': 'npm:angular-in-memory-web-api/bundles/in-memory-web-api.umd.min.js'
+      'angular-in-memory-web-api': 'npm:angular-in-memory-web-api/bundles/in-memory-web-api.umd.min.js',
+	  'angular2-cookie': 'npm:angular2-cookie',
     },
     packages: {
       app: {
@@ -50,7 +51,11 @@
       },
       traceur: {
           main: 'traceur'
-      }
+      },
+	  'angular2-cookie': {
+		  main: './core.js',
+		  defaultExtension: 'js'
+	  }
     }
   });
 })(this);

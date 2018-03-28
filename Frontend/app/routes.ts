@@ -13,7 +13,7 @@ const routes: Route[] = [
     { path: '', component: MainPageComponent },
     { path: 'admin', component: AdminComponent, canActivate: [AuthGuardAdmin] },
     { path: 'user', component: UserComponent, canActivate: [AuthGuardUser] },
-    { path: 'journal/:discipline', component: JournalComponent }
+    { path: 'journal/:fac/:disc', component: JournalComponent }
 ];
 
 export default routes;

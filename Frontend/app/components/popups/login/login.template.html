@@ -1,0 +1,16 @@
+<h1 mat-dialog-title>Authorize</h1>
+<mat-dialog-content>
+	<mat-form-field class="input-full-width">
+		<input matInput [(ngModel)]="_username" placeholder="Username" type="text">
+		<mat-error *ngIf="_error">
+			Username or password is incorrect
+		</mat-error>
+	</mat-form-field>
+	<mat-form-field class="input-full-width">
+		<input matInput [(ngModel)]="_password" placeholder="Password" type="password">
+	</mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions class="md-actions" align="end">
+	<button mat-button (click)="onOkClick()">OK</button>
+	<button mat-button mat-dialog-close>Cancel</button>
+</mat-dialog-actions>

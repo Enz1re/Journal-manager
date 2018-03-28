@@ -23,7 +23,7 @@
 	 	</mat-form-field>
 	</div>
 	<div class="login-container">
-		<a href="#">Войти</a>
+		<a href="#" (click)="login($event)">Войти</a>
 	</div>
 </mat-card>
 <mat-divider></mat-divider>
@@ -32,21 +32,17 @@
   		<div class="sidenav-container">
   			<div class="expansion-panel-container">
 	  			<mat-accordion>
-					<mat-expansion-panel *ngFor="let faculty of _faculties">
+					<mat-expansion-panel *ngFor="let faculty of _faculties" [expanded]="faculty.id === _currentFacultyId">
 					    <mat-expansion-panel-header>
 							<mat-panel-title>{{faculty.name}}</mat-panel-title>
 						</mat-expansion-panel-header>
 						<mat-accordion>
-							<mat-expansion-panel *ngFor="let discipline of faculty.disciplines">
-							    <mat-expansion-panel-header>
-									<mat-panel-title>{{discipline.name}}</mat-panel-title>
-								</mat-expansion-panel-header>
-								<mat-list>
-									<mat-list-item *ngFor="let group of discipline.groups">
-										<button mat-raised-button>{{group}} група</button>
-									</mat-list-item>
-								</mat-list>
-							</mat-expansion-panel>
+							<mat-list *ngFor="let discipline of faculty.disciplines">
+								<mat-list-item>
+									<button (click)="goToJournal(faculty.id, discipline.id);" 
+											 mat-raised-button [disabled]="discipline.id === _currentDisciplineId">{{discipline.name}}</button>
+								</mat-list-item>
+							</mat-list>
 						 </mat-accordion>
 					</mat-expansion-panel>
 				 </mat-accordion>

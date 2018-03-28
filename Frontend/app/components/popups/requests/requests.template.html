@@ -1,0 +1,30 @@
+<h1 mat-dialog-title>Hi</h1>
+<div mat-dialog-content>
+	<p>Pending requests:</p>
+	<div class="mat-elevation-z8">
+		<mat-table #table [dataSource]="_dataSource">
+			<ng-container matColumnDef="id">
+			  <mat-header-cell *matHeaderCellDef> Id </mat-header-cell>
+			  <mat-cell *matCellDef="let request"> {{request.id}} </mat-cell>
+			</ng-container>
+			<ng-container matColumnDef="issuedAt">
+			  <mat-header-cell *matHeaderCellDef> Issued at </mat-header-cell>
+			  <mat-cell *matCellDef="let request"> {{request.issuedAt.toLocaleDateString()}} {{request.issuedAt.toLocaleTimeString()}} </mat-cell>
+			</ng-container>
+			<ng-container matColumnDef="issuer">
+			  <mat-header-cell *matHeaderCellDef> Issuer </mat-header-cell>
+			  <mat-cell *matCellDef="let request"> {{request.issuerUsername}} </mat-cell>
+			</ng-container>
+			<ng-container matColumnDef="title">
+			  <mat-header-cell *matHeaderCellDef> Title </mat-header-cell>
+			  <mat-cell *matCellDef="let request"> {{request.title}} </mat-cell>
+			</ng-container>
+			<mat-header-row *matHeaderRowDef="_displayedColumns"></mat-header-row>
+			<mat-row *matRowDef="let row; columns: _displayedColumns;">
+			</mat-row>
+		</mat-table>
+	</div>
+</div>
+<div mat-dialog-actions>
+	<button mat-button (click)="onCancelClick()">No Thanks</button>
+</div>

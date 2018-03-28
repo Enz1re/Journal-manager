@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from "@angular/common";
 import { Routes, RouterModule } from '@angular/router';
+import { FormsModule } from "@angular/forms";
 
 import { AngularMaterialModule } from "./angular-material.module";
 
@@ -9,6 +10,8 @@ import { MainPageComponent } from "./main-page/main-page.component";
 import { AdminComponent } from "./admin/admin.component";
 import { UserComponent } from "./user/user.component";
 import { JournalComponent } from "./journal/journal.component";
+import { RequestsDialog } from "./popups/requests/requests.dialog";
+import { LoginDialog } from "./popups/login/login.dialog";
 
 import routes from "../routes";
 
@@ -19,10 +22,13 @@ import routes from "../routes";
         UserComponent,
         AdminComponent,
         JournalComponent,
-        MainPageComponent
+        MainPageComponent,
+	    RequestsDialog,
+        LoginDialog
     ],
     imports: [
         CommonModule,
+        FormsModule,
         AngularMaterialModule,
         RouterModule.forRoot(routes),
     ],
@@ -33,6 +39,10 @@ import routes from "../routes";
         JournalComponent,
         MainPageComponent
     ],
+    entryComponents: [
+        RequestsDialog,
+        LoginDialog
+    ]
 })
 export class ComponentsModule {
 
