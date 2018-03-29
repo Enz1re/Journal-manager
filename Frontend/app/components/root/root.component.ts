@@ -12,9 +12,11 @@ import { Faculty } from "../../models/Faculty";
 import { Term } from "../../models/Term";
 
 import { MainPageComponent } from "../../components/main-page/main-page.component";
-import { MatSidenav,
-         MatDialog,
-         MatDrawerContainer
+import {
+	MatSidenav,
+    MatDialog,
+	MatSelectChange,
+    MatDrawerContainer
 } from "@angular/material";
 
 import { HttpService } from "../../services/http.service";
@@ -34,6 +36,7 @@ export class RootComponent implements OnInit {
     private _currentFacultyId: number = -1;
     private _currentDisciplineId: number = -1;
     private _selectedYear: string = null;
+	private _currentYear: string = null;
 
     constructor (private router: Router, private location: Location, private route: ActivatedRoute,
                  private dialog: MatDialog, private auth: AuthService, private http: HttpService) {
@@ -47,20 +50,23 @@ export class RootComponent implements OnInit {
     ngOnInit() {
         this.route.queryParams.subscribe(params => {
             this.http.getYears().subscribe(years => {
-                this._years = years;
-                if (params.y) {
-                    this._selectedYear = params.y;
-                    this.http.getFaculties(this._selectedYear).subscribe(faculties => {
-                        this._faculties = faculties;
-                    });
-                } else {
-                    this.http.getCurrentYear().subscribe(year => {
-                        this._selectedYear = year;
-                        this.http.getFaculties(year).subscribe(faculties => {
-                            this._faculties = faculties;
-                        });
-                    });
-                }
+				this.http.getCurrentYear().subscribe(year => {
+					this._selectedYear = this._currentYear = year;
+					this._years = years;
+					if (params.y) {
+						this._selectedYear = params.y;
+						if (this._selectedYear === this._currentYear) {
+							this.router.navigate(['']);
+						}
+						this.http.getFaculties(this._selectedYear).subscribe(faculties => {
+							this._faculties = faculties;
+						});
+					} else {
+						this.http.getFaculties(this._selectedYear).subscribe(faculties => {
+							this._faculties = faculties;
+						});
+					}
+				});
             });
         });
     }
@@ -73,12 +79,28 @@ export class RootComponent implements OnInit {
         });
 
         dialogRef.afterClosed().subscribe(result => {
-            console.log(result);
+			if (!!result) {
+				this.router.navigateByUrl('');
+			}
         });
     }
 
+	changeYear(event: MatSelectChange) {
+		this._selectedYear = event.value;
+		if (this._selectedYear === this._currentYear) {
+			this.router.navigate(['']);
+		} else {
+			this.router.navigate([''], { queryParams: { y: this._selectedYear } }]);
+		}
+	}
+	
     goToJournal(facId: number, discId: number) {
         this._currentDisciplineId = discId;
         this.router.navigate([`/journal/${facId}/${discId}`]);
     }
+	
+	goToUserPage(e: Event) {
+		e.preventDefault();
+		this.router.navigate([`/user/${this.auth.currentUser.id}`]);
+	}
 }

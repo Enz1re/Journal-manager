@@ -10,7 +10,7 @@ import { AuthService } from '../../../services/auth.service';
 export class LoginDialog {
     private _username: string;
     private _password: string;
-    private _error: false;
+    private _error: boolean = false;
 
     constructor(public dialogRef: MatDialogRef<LoginDialog>, private auth: AuthService) {
 

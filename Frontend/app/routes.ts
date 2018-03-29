@@ -12,7 +12,7 @@ import { AuthGuardUser } from "./services/authguard.user.service";
 const routes: Route[] = [
     { path: '', component: MainPageComponent },
     { path: 'admin', component: AdminComponent, canActivate: [AuthGuardAdmin] },
-    { path: 'user', component: UserComponent, canActivate: [AuthGuardUser] },
+    { path: 'user/:id', component: UserComponent, canActivate: [AuthGuardUser] },
     { path: 'journal/:fac/:disc', component: JournalComponent }
 ];
 

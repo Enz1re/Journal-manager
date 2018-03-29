@@ -54,7 +54,9 @@ a {
 }
 
 .login-container {
-	width: 5em;
+	padding-left: 4px;
+	padding-right: 4px;
+	min-width: 5em;
 	text-align: center;
 }
 

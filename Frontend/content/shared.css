@@ -18,6 +18,23 @@ img {
 	height: 100%;
 }
 
+.right {
+	float: right;
+}
+
+.left {
+	float: left;
+}
+
 .input-full-width {
 	width: 100%;
+}
+
+.button {
+	width: 7.6em;
+}
+
+.icon-sm {
+	width: 32px;
+	height: 32px;
 }

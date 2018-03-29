@@ -17,7 +17,7 @@ export class HttpService {
     }
 
     getYears(): Observable<string[]> {
-        return this.http.get("../../data/years.json").map((response: any) => return <string[]>response.years);
+        return this.http.get("../../data/years.json").map((response: any) => <string[]>response.years);
     }
 
     getCurrentYear(): Observable<string> {

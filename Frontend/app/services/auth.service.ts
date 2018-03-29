@@ -10,7 +10,7 @@ import { User } from "../models/User";
 
 @Injectable()
 export class AuthService {
-    public currentUser: User;
+    public currentUser: User = null;
 
     constructor (private http: HttpClient) {
 
@@ -20,6 +20,8 @@ export class AuthService {
         if (username.toLowerCase() === 'admin' && password.toLowerCase() === 'admin') {
             const user = new User(username, username, username);
             this.currentUser = user;
+			user.id = 420;
+			user.role = "admin";
             return user;
         } else {
             return null;
