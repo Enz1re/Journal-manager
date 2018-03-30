@@ -26,11 +26,17 @@ export class AdminComponent implements OnInit {
         });
     }
 
+	notificationMessage() {
+		const verb = this._pendingRequests.length > 1 ? 'are' : 'is';
+		const ending = this._pendingRequests.length > 1 ? 's' : '';
+		return `There ${verb} ${this._pendingRequests.length} pending request${ending}.`;
+	}
+	
     showRequestList(e: Event) {
         e.preventDefault();
 
         const dialogRef = this.dialog.open(RequestsDialog, {
-            width: '400px',
+            width: '700px',
             height: '500px',
             data: { requests: this._pendingRequests }
         });

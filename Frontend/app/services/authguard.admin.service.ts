@@ -12,11 +12,11 @@ import { HttpService } from "../services/http.service";
 
 @Injectable()
 export class AuthGuardAdmin implements CanActivate {
-    constructor(private authService: AuthService, private httpService: HttpService) {
+    constructor(private auth: AuthService, private httpService: HttpService) {
 
     }
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-        return true;
+        return !!this.auth.currentUser && this.auth.currentUser.role === 'admin';
     }
 }

@@ -85,22 +85,34 @@ export class RootComponent implements OnInit {
         });
     }
 
+	logOff(e: Event) {
+		e.preventDefault();
+		this.auth.logOff();
+	}
+	
 	changeYear(event: MatSelectChange) {
 		this._selectedYear = event.value;
 		if (this._selectedYear === this._currentYear) {
 			this.router.navigate(['']);
 		} else {
-			this.router.navigate([''], { queryParams: { y: this._selectedYear } }]);
+			this.router.navigate([''], { queryParams: { y: this._selectedYear } });
 		}
+	}
+	
+	goToMain(e: Event) {
+		e.preventDefault();
+		this._currentDisciplineId = -1;
+		this._currentFacultyId = -1;
+		this.router.navigate([''], { queryParamsHandling: "merge" });
 	}
 	
     goToJournal(facId: number, discId: number) {
         this._currentDisciplineId = discId;
-        this.router.navigate([`/journal/${facId}/${discId}`]);
+        this.router.navigate([`/journal/${facId}/${discId}`], { queryParamsHandling: "merge" });
     }
 	
 	goToUserPage(e: Event) {
 		e.preventDefault();
-		this.router.navigate([`/user/${this.auth.currentUser.id}`]);
+		this.router.navigate(['/user']);
 	}
 }

@@ -1,6 +1,6 @@
 <mat-card class="header-container">
 	<div class="logo-container">
-		<a routerLink="">
+		<a href="#" (click)="goToMain($event)">
 			<img src="content/journal.png" title="На главную">
 		</a>
 	</div>
@@ -17,9 +17,13 @@
 	</div>
 	<div class="login-container">
 		<a *ngIf="auth.currentUser === null" href="#" (click)="login($event)">Войти</a>
-		<a *ngIf="auth.currentUser !== null" href="#" (click)="goToUserPage($event)">
-			{{auth.currentUser.lastName}} {{auth.currentUser.firstName}} {{auth.currentUser.patronymic}}
-		</a>
+		<div *ngIf="auth.currentUser !== null">
+			<a href="#" (click)="goToUserPage($event)">
+				{{auth.currentUser.lastName}} {{auth.currentUser.firstName}} {{auth.currentUser.patronymic}}
+			</a>
+			&nbsp;
+			<a href="#" (click)="logOff($event)">Log off</a>
+		</div>
 	</div>
 </mat-card>
 <mat-divider></mat-divider>
@@ -32,14 +36,14 @@
 					    <mat-expansion-panel-header>
 							<mat-panel-title>{{faculty.name}}</mat-panel-title>
 						</mat-expansion-panel-header>
-						<mat-accordion>
+						<ng-template matExpansionPanelContent>
 							<mat-list *ngFor="let discipline of faculty.disciplines">
 								<mat-list-item>
 									<button (click)="goToJournal(faculty.id, discipline.id);" 
 											 mat-raised-button [disabled]="discipline.id === _currentDisciplineId">{{discipline.name}}</button>
 								</mat-list-item>
 							</mat-list>
-						 </mat-accordion>
+						 </ng-template>
 					</mat-expansion-panel>
 				 </mat-accordion>
 			</div>

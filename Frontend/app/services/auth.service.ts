@@ -21,7 +21,7 @@ export class AuthService {
             const user = new User(username, username, username);
             this.currentUser = user;
 			user.id = 420;
-			user.role = "admin";
+			user.role = "tutor";
             return user;
         } else {
             return null;
@@ -29,6 +29,6 @@ export class AuthService {
     }
 
     logOff() {
-
+		this.currentUser = null;
     }
 }

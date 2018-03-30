@@ -1,7 +1,7 @@
 <div class="user">
-	<div class="request-container">
+	<div class="request-container" *ngIf="auth.currentUser.role !== 'tutor'">
 		<h4>Submit a request.</h4>
-		<br/>
+		<br />
 		<mat-form-field>
 			<mat-select placeholder="Request type" id="req-type">
 				<mat-option value="tutor">Make me a tutor</mat-option>
@@ -11,5 +11,10 @@
 			<textarea matInput rows="6" placeholder="Message"></textarea>
 		</mat-form-field>
 		<button class="button" mat-raised-button>Submit</button>
+	</div>
+	<div class="journals-container" *ngIf="auth.currentUser.role === 'tutor'">
+		<h4>My journals</h4>
+		<br />
+		
 	</div>
 </div>

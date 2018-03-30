@@ -1,30 +1,43 @@
-<h1 mat-dialog-title>Hi</h1>
+<h1 mat-dialog-title>Pending requests</h1>
 <div mat-dialog-content>
-	<p>Pending requests:</p>
 	<div class="mat-elevation-z8">
 		<mat-table #table [dataSource]="_dataSource">
+			<ng-container matColumnDef="select">
+				<mat-header-cell *matHeaderCellDef>
+				</mat-header-cell>
+				<mat-cell *matCellDef="let row">
+					<mat-checkbox (click)="$event.stopPropagation()"
+							      (change)="$event ? _selection.toggle(row) : null"
+							      [checked]="_selection.isSelected(row)">
+					</mat-checkbox>
+				</mat-cell>
+			</ng-container>
 			<ng-container matColumnDef="id">
 			  <mat-header-cell *matHeaderCellDef> Id </mat-header-cell>
 			  <mat-cell *matCellDef="let request"> {{request.id}} </mat-cell>
 			</ng-container>
 			<ng-container matColumnDef="issuedAt">
 			  <mat-header-cell *matHeaderCellDef> Issued at </mat-header-cell>
-			  <mat-cell *matCellDef="let request"> {{request.issuedAt.toLocaleDateString()}} {{request.issuedAt.toLocaleTimeString()}} </mat-cell>
+			  <mat-cell *matCellDef="let request"> {{request.issuedAt}} </mat-cell>
 			</ng-container>
 			<ng-container matColumnDef="issuer">
 			  <mat-header-cell *matHeaderCellDef> Issuer </mat-header-cell>
-			  <mat-cell *matCellDef="let request"> {{request.issuerUsername}} </mat-cell>
+			  <mat-cell *matCellDef="let request"> {{request.issuer}} </mat-cell>
 			</ng-container>
 			<ng-container matColumnDef="title">
 			  <mat-header-cell *matHeaderCellDef> Title </mat-header-cell>
 			  <mat-cell *matCellDef="let request"> {{request.title}} </mat-cell>
 			</ng-container>
 			<mat-header-row *matHeaderRowDef="_displayedColumns"></mat-header-row>
-			<mat-row *matRowDef="let row; columns: _displayedColumns;">
+			<mat-row *matRowDef="let row; columns: _displayedColumns;"
+				     (click)="_selection.toggle(row)">
 			</mat-row>
 		</mat-table>
 	</div>
 </div>
-<div mat-dialog-actions>
-	<button mat-button (click)="onCancelClick()">No Thanks</button>
+<div>
+	<div mat-dialog-actions class="right">
+		<button mat-button [disabled]="!_selection.hasValue()" (click)="acceptRequest()">Accept</button>
+		<button mat-button (click)="onCancelClick()">Close</button>
+	</div>
 </div>
