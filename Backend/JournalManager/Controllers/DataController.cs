@@ -1,65 +1,94 @@
-﻿using System.Linq;
-using JournalManager.Models;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc;
+using JournalManager.Data.Interfaces;
+using JournalManager.Data.Constants;
+using JournalManager.Data.Models.Data;
 
 namespace JournalManager.Controllers
 {
     [Produces("application/json")]
-    [Route("[controller]/[action]")]
+    [Route("api/Data")]
     public class DataController : Controller
     {
-        private DataContext _db;
+        private IСurriculumRepository _curriculumRepository;
+        private IRequestRepository _requestRepository;
 
-        public DataController(DataContext context)
+        public DataController(IСurriculumRepository curriculumRepository, IRequestRepository requestRepository)
         {
-            _db = context;
+            _curriculumRepository = curriculumRepository;
+            _requestRepository = requestRepository;
         }
 
         [HttpGet]
+        [Route("Year")]
         public IActionResult GetYearData()
         {
             return Ok(new
             {
-                years=_db.Years.Select(y=>y.Label),
-                currentYear=_db.Years.Last().Label
+                years = _curriculumRepository.GetYears(),
+                currentYear = _curriculumRepository.GetCurrentYear()
             });
         }
 
         [HttpGet]
-        [Route("{yearid}")]
-        public IActionResult GetFaculties(int yearid)
+        [Route("Faculties/{yearId}")]
+        public IActionResult GetFaculties([FromRoute]int yearId)
         {
-            if (!_db.Years.Any(y => y.Id == yearid))
+            if (_curriculumRepository.GetYear(yearId) == null)
             {
-                return BadRequest("No such year");
+                return BadRequest(Strings.NoSuchYear(yearId.ToString()));
             }
-            return Ok(_db.Years.Include(y=>y.Faculties).ThenInclude(f=>f.Disciplines)
-                .Single(y => y.Id == yearid).Faculties.Select(f=> new
-            {
-                facName=f.Name,
-                discipines=f.Disciplines
-            }));
+
+            return Ok(new { faculties = _curriculumRepository.GetFacultyList(yearId)});
         }
 
         [HttpGet]
-        [Route("{disciplineid}")]
-        public IActionResult GetDiscipline(int disciplineid)
+        [Route("Faculty/{id}")]
+        public IActionResult GetFaculty([FromRoute]int id)
         {
-            if (!_db.Disciplines.Any(d => d.Id == disciplineid))
+            var faculty = _curriculumRepository.GetFaculty(id);
+            if (faculty == null)
             {
-                return BadRequest("No such discipline");
+                return BadRequest(Strings.NoSuchFaculty(id.ToString()));
             }
-            return Ok(_db.Disciplines.Include(d=>d.Terms).Single(d => d.Id == disciplineid));
+
+            return Ok(faculty);
         }
 
         [HttpGet]
-        [Route("{request}")]
+        [Route("Disciplines/{facId}")]
+        public IActionResult GetDisciplines([FromRoute]int facId)
+        {
+            if (_curriculumRepository.GetFaculty(facId) == null)
+            {
+                return BadRequest(Strings.NoSuchFaculty(facId.ToString()));
+            }
+
+            return Ok(new { disciplines = _curriculumRepository.GetDisciplineList(facId) });
+        }
+
+        [HttpGet]
+        [Route("Discipline/{id}")]
+        public IActionResult GetDiscipline([FromRoute]int id)
+        {
+            var discipline = _curriculumRepository.GetDiscipline(id);
+            if (discipline == null)
+            {
+                return BadRequest(Strings.NoSuchDiscipline(id.ToString()));
+            }
+
+            return Ok(discipline);
+        }
+
+        [HttpPost]
+        [Route("Request/Submit")]
         public IActionResult SubmitRequest(Request request)
         {
-            request.User=_db.Users.Single(u=>u.GetToken()==Request.Headers["access_token"]);
-            _db.Requests.Update(request);
-            _db.SaveChanges();
+            var status = _requestRepository.AddRequest(request);
+            if (status.Message != Strings.OK)
+            {
+                return BadRequest(status.Message);
+            }
+
             return Ok();
         }
     }

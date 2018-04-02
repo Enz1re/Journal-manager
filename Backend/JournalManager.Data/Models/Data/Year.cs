@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace JournalManager.Models
+namespace JournalManager.Data.Models.Data
 {
     public class Year
     {
@@ -14,7 +14,7 @@ namespace JournalManager.Models
 
         public Year()
         {
-            Faculties=new List<Faculty>();
+            Faculties = new List<Faculty>();
         }
     }
 }

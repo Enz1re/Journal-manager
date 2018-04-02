@@ -3,7 +3,7 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:62773/",
+      "applicationUrl": "http://localhost:62774/",
       "sslPort": 0
     }
   },
@@ -18,7 +18,7 @@
     "JournalManager": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "api/values",
+      "launchUrl": "api/Data/Year",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },

@@ -1,4 +1,4 @@
-﻿namespace JournalManager.Models
+﻿namespace JournalManager.Data.Models.Data
 {
     public class RoleC
     {

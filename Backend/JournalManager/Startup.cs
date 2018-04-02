@@ -1,9 +1,10 @@
-﻿using JournalManager.Models;
+﻿using JournalManager.Data.Models.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
+using JournalManager.Extensions;
 
 namespace JournalManager
 {
@@ -16,16 +17,13 @@ namespace JournalManager
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
-
-            var connection = @"Server=(localdb)\mssqllocaldb;Database=JournalManagerDB;Trusted_Connection=True;ConnectRetryCount=0";
-            services.AddDbContext<DataContext>(options => options.UseSqlServer(connection));
+            services.AddDbContext<DataContext>(options => options.UseSqlServer(Configuration.GetConnectionString("AppDb")));
+            services.RegisterDependencies();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())
@@ -37,8 +35,6 @@ namespace JournalManager
             {
                 routes.MapRoute("default", "{controller=Admin}/{action=GetTutors}");
             });
-
-          
         }
     }
 }

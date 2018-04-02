@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace JournalManager.Models
+namespace JournalManager.Data.Models.Data
 {
     public class Term
     {

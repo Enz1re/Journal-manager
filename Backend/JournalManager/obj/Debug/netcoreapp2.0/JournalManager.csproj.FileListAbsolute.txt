@@ -9,3 +9,16 @@ I:\ВУЗ\сайтговна\JournalManager\JournalManager\obj\Debug\netcoreapp2
 I:\ВУЗ\сайтговна\JournalManager\JournalManager\bin\Debug\netcoreapp2.0\JournalManager.pdb
 I:\ВУЗ\сайтговна\JournalManager\JournalManager\obj\Debug\netcoreapp2.0\JournalManager.dll
 I:\ВУЗ\сайтговна\JournalManager\JournalManager\obj\Debug\netcoreapp2.0\JournalManager.pdb
+C:\my_files\jm\Backend\JournalManager\bin\Debug\netcoreapp2.0\JournalManager.Data.dll
+C:\my_files\jm\Backend\JournalManager\obj\Debug\netcoreapp2.0\JournalManager.csprojResolveAssemblyReference.cache
+C:\my_files\jm\Backend\JournalManager\obj\Debug\netcoreapp2.0\JournalManager.csproj.CoreCompileInputs.cache
+C:\my_files\jm\Backend\JournalManager\obj\Debug\netcoreapp2.0\JournalManager.AssemblyInfoInputs.cache
+C:\my_files\jm\Backend\JournalManager\obj\Debug\netcoreapp2.0\JournalManager.AssemblyInfo.cs
+C:\my_files\jm\Backend\JournalManager\obj\Debug\netcoreapp2.0\JournalManager.dll
+C:\my_files\jm\Backend\JournalManager\obj\Debug\netcoreapp2.0\JournalManager.pdb
+C:\my_files\jm\Backend\JournalManager\bin\Debug\netcoreapp2.0\JournalManager.deps.json
+C:\my_files\jm\Backend\JournalManager\bin\Debug\netcoreapp2.0\JournalManager.runtimeconfig.json
+C:\my_files\jm\Backend\JournalManager\bin\Debug\netcoreapp2.0\JournalManager.runtimeconfig.dev.json
+C:\my_files\jm\Backend\JournalManager\bin\Debug\netcoreapp2.0\JournalManager.dll
+C:\my_files\jm\Backend\JournalManager\bin\Debug\netcoreapp2.0\JournalManager.pdb
+C:\my_files\jm\Backend\JournalManager\bin\Debug\netcoreapp2.0\JournalManager.Data.pdb

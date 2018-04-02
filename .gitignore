@@ -4,3 +4,5 @@ Frontend/app/**/*.map
 Frontend/*.log
 Frontend/data/*
 Frontend/public/*
+Backend/JournalManager/bin/*
+Backend/JournalManager/obj/*

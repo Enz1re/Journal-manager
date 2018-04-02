@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace JournalManager.Models
+namespace JournalManager.Data.Models.Data
 {
     public class Faculty
     {
@@ -9,6 +9,9 @@ namespace JournalManager.Models
 
         [Required]
         public string Name { get; set; }
+
+        [Required]
+        public Year Year { get; set; }
 
         public List<Discipline> Disciplines { get; set; }
 

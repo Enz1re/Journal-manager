@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace JournalManager.Models
+namespace JournalManager.Data.Models.Data
 {
     public class Request
     {
@@ -11,16 +11,9 @@ namespace JournalManager.Models
         public DateTime Date { get; set; }
 
         [Required]
-        public User User { get; set; }
+        public User Issuer { get; set; }
 
         [Required]
         public string Title { get; set; }
-
-        public Status Status { get; set; }
-    }
-
-    public enum Status 
-    {
-        Pending,Declined ,Accepted 
     }
 }

@@ -1,54 +1,55 @@
-﻿using System.Linq;
-using JournalManager.Models;
+﻿using System;
+using JournalManager.Data.Interfaces;
+using JournalManager.Data.Models.Data;
+using JournalManager.Data.Constants;
 using Microsoft.AspNetCore.Mvc;
 
 namespace JournalManager.Controllers
 {
     [Produces("application/json")]
-    [Route("[controller]/[action]")]
+    [Route("api/Auth")]
     public class AuthController : Controller
     {
-        private DataContext _db;
+        private IUserRepository _userRepository;
 
-        public AuthController(DataContext context)
+        public AuthController(IUserRepository userRepository)
         {
-            _db = context;
+            _userRepository = userRepository;
         }
 
-        [HttpGet]
-        [Route("{login}/{password}")]
-        public IActionResult Login(string login,string password)
+        [HttpPost]
+        [Route("Login")]
+        public IActionResult Login(string username, string password)
         {
-            if (!_db.Users.Any(u => u.Login == login))
+            var status = _userRepository.FindUser(username, password);
+            if (status.Message != Strings.OK)
             {
-                return BadRequest("No such user");
+                return BadRequest(new { message = status.Message });
             }
-            if (_db.Users.Any(u => u.Login == login && u.Password != password))
-            {
-                return BadRequest("Wrong password");
-            }
-            return Ok(_db.Users.Single(u => u.Login == login && u.Password == password).GetToken());
+
+            return Ok(new { access_token = Jwt.GenerateToken(username, Enum.GetName(typeof(Role), status.User.Role)) });
         }
 
-        [HttpGet]
-        [Route("{firstname}/{secondname}/{patronymic}/{login}/{password}")]
-        public IActionResult Register(string firstname,string secondname,string patronymic, string login , string password )
+        [HttpPost]
+        [Route("Register")]
+        public IActionResult Register(string firstname, string secondname, string patronymic, string username, string password)
         {
-            if (_db.Users.Any(u => u.Login == login))
-            {
-                return BadRequest("User with such login already exist");
-            }
             var user = new User
             {
-                Login = login,
+                Username = username,
                 Password = password,
                 FirstName = firstname,
                 SecondName = secondname,
                 Patronymic = patronymic
             };
-            _db.Users.Add(user);
-            _db.SaveChanges();
-            return Ok(user.GetToken());
+
+            var status = _userRepository.AddUser(user);
+            if (status.Message != Strings.OK)
+            {
+                return BadRequest(status.Message);
+            }
+
+            return Ok(new { access_token = Jwt.GenerateToken(username, Enum.GetName(typeof(Role), status.User.Role)) });
         }
     }
 }
