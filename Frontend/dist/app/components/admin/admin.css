@@ -1,0 +1,18 @@
+.admin {
+	height: 98%;
+	width: 98%;
+	margin: auto;
+	display: block;
+	font-size: 1.2em;
+	background: white;
+	text-align: center;
+	position: relative;
+}
+
+.pending-request-container {
+	font-size: 1.1em;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-right: 10px;
+}

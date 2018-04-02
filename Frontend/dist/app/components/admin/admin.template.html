@@ -1,0 +1,7 @@
+<div class="admin">
+	<div class="right pending-request-container" *ngIf="_pendingRequests.length > 0">
+		<img class="icon-sm" src="content/warning.png">
+		&nbsp;
+		<a href="#" (click)="showRequestList($event)">{{notificationMessage()}}</a>
+	</div>
+</div>

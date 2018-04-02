@@ -1,0 +1,55 @@
+<mat-card class="header-container">
+	<div class="logo-container">
+		<a href="#" (click)="goToMain($event)">
+			<img src="content/journal.png" title="На главную">
+		</a>
+	</div>
+	&nbsp;&nbsp;&nbsp;
+	<div class="app-name">
+		<h1>Менеджер журналов</h1>
+	</div>
+	<div class="year-select-container">
+		<mat-form-field>
+			<mat-select [(value)]="_selectedYear" (selectionChange)="changeYear($event)">
+				<mat-option *ngFor="let year of _years" [value]="year">{{year}}</mat-option>
+			</mat-select>
+	 	</mat-form-field>
+	</div>
+	<div class="login-container">
+		<a *ngIf="auth.currentUser === null" href="#" (click)="login($event)">Войти</a>
+		<div *ngIf="auth.currentUser !== null">
+			<a href="#" (click)="goToUserPage($event)">
+				{{auth.currentUser.lastName}} {{auth.currentUser.firstName}} {{auth.currentUser.patronymic}}
+			</a>
+			&nbsp;
+			<a href="#" (click)="logOff($event)">Log off</a>
+		</div>
+	</div>
+</mat-card>
+<mat-divider></mat-divider>
+<mat-sidenav-container #container>
+  	<mat-sidenav #sidenav mode="side" opened="true">
+  		<div class="sidenav-container">
+  			<div class="expansion-panel-container">
+	  			<mat-accordion>
+					<mat-expansion-panel *ngFor="let faculty of _faculties" [expanded]="faculty.id === _currentFacultyId">
+					    <mat-expansion-panel-header>
+							<mat-panel-title>{{faculty.name}}</mat-panel-title>
+						</mat-expansion-panel-header>
+						<ng-template matExpansionPanelContent>
+							<mat-list *ngFor="let discipline of faculty.disciplines">
+								<mat-list-item>
+									<button (click)="goToJournal(faculty.id, discipline.id);" 
+											 mat-raised-button [disabled]="discipline.id === _currentDisciplineId">{{discipline.name}}</button>
+								</mat-list-item>
+							</mat-list>
+						 </ng-template>
+					</mat-expansion-panel>
+				 </mat-accordion>
+			</div>
+		</div>
+  	</mat-sidenav>
+  	<mat-sidenav-content class="container">
+    	<router-outlet></router-outlet>
+  	</mat-sidenav-content>
+</mat-sidenav-container>

@@ -3,3 +3,4 @@ Frontend/app/**/*.js
 Frontend/app/**/*.map
 Frontend/*.log
 Frontend/data/*
+Frontend/public/*

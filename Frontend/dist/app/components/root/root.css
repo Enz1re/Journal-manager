@@ -1,0 +1,76 @@
+a {
+	color: inherit;
+}
+
+.container {
+	background: #f2f2f2;
+	height: calc(100vh - 109px);
+ 	top: 0;
+  	bottom: 0;
+  	left: 0;
+  	right: 0;
+  	display: block;
+    align-items: center;
+    justify-content: center;
+    vertical-align: middle;
+    margin-left: 22em;
+}
+
+.app-name,
+.logo-container,
+.year-select-container,
+.search-input-container,
+.search-button-container,
+.login-container {
+	align-self: center;
+}
+
+.header-container {
+	height: 60px;
+	display: flex;
+}
+
+.app-name {
+	width: 12em;
+	font-family: inherit;
+	word-wrap: break-word;
+}
+
+.logo-container {
+	width: 81px;
+	height: 81px;
+}
+
+.year-select-container {
+	margin-left: auto;
+}
+
+.search-input-container {
+	width: 26em;
+	display: flex;
+	margin-left: auto;
+	margin-right: auto;
+	vertical-align: center;
+}
+
+.login-container {
+	padding-left: 4px;
+	padding-right: 4px;
+	min-width: 5em;
+	text-align: center;
+}
+
+.sidenav-container {
+	width: 22em;
+	height: 100%;
+	display: block;
+}
+
+.expansion-panel-container {
+	width: 90%;
+	display: block;
+	padding-top: 3.6em;
+	margin-left: auto;
+	margin-right: auto;
+}
+
