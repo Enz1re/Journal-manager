@@ -1,12 +1,14 @@
 ﻿using JournalManager.Data.Constants;
 using JournalManager.Data.Interfaces;
 using JournalManager.Data.Models.Data;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace JournalManager.Controllers
 {
     [Produces("application/json")]
     [Route("api/Admin")]
+    [Authorize(Roles = "Admin")]
     public class AdminController : Controller
     {
         private IRequestRepository _requestRepository;

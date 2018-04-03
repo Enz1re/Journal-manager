@@ -1,35 +1,39 @@
-﻿using Microsoft.IdentityModel.Tokens;
+﻿using JournalManager.Data.Models.Configuration;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Text;
 
 namespace JournalManager
 {
-    public static class Jwt
+    public class Jwt
     {
-        private const string Secret = "db3OIsj+BXE9NZDy0t8W3TcNekrF+2d/1sFnWG4HnV8TZY30iTOdtVWJG8abWvB1GlOgJuQZdcF2Luqm/hccMw==";
+        private JwtConfig _config;
 
-        public static string GenerateToken(string username, string userRole)
+        public Jwt(JwtConfig config)
         {
-            var symmetricKey = Convert.FromBase64String(Secret);
-            var tokenHandler = new JwtSecurityTokenHandler();
+            _config = config;
+        }
 
-            var timeStamp = DateTime.UtcNow;
-            var tokenDescriptor = new SecurityTokenDescriptor
+        public string GenerateToken(string username, string userRole)
+        {
+            var claims = new[]
             {
-                Subject = new ClaimsIdentity(new[]
-                                                {
-                                                    new Claim(ClaimTypes.Name, username),
-                                                    new Claim(ClaimTypes.Role, userRole)
-                                                }),
-                IssuedAt = timeStamp,
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(symmetricKey), SecurityAlgorithms.HmacSha256Signature),
+                new Claim(ClaimTypes.Name, username),
+                new Claim(ClaimTypes.Role, userRole)
             };
 
-            var stoken = tokenHandler.CreateToken(tokenDescriptor);
-            var token = tokenHandler.WriteToken(stoken);
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config.Key));
+            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
-            return token;
+            var token = new JwtSecurityToken(issuer: _config.Issuer,
+                                             audience: _config.Audience,
+                                             claims: claims,
+                                             expires: DateTime.UtcNow.AddYears(1),
+                                             signingCredentials: creds);
+
+            return new JwtSecurityTokenHandler().WriteToken(token);
         }
     }
 }

@@ -2,6 +2,7 @@
 using JournalManager.Data.Interfaces;
 using JournalManager.Data.Constants;
 using JournalManager.Data.Models.Data;
+using Microsoft.AspNetCore.Authorization;
 
 namespace JournalManager.Controllers
 {
@@ -20,6 +21,7 @@ namespace JournalManager.Controllers
 
         [HttpGet]
         [Route("Year")]
+        [AllowAnonymous]
         public IActionResult GetYearData()
         {
             return Ok(new
@@ -31,6 +33,7 @@ namespace JournalManager.Controllers
 
         [HttpGet]
         [Route("Faculties/{yearId}")]
+        [AllowAnonymous]
         public IActionResult GetFaculties([FromRoute]int yearId)
         {
             if (_curriculumRepository.GetYear(yearId) == null)
@@ -43,6 +46,7 @@ namespace JournalManager.Controllers
 
         [HttpGet]
         [Route("Faculty/{id}")]
+        [AllowAnonymous]
         public IActionResult GetFaculty([FromRoute]int id)
         {
             var faculty = _curriculumRepository.GetFaculty(id);
@@ -56,6 +60,7 @@ namespace JournalManager.Controllers
 
         [HttpGet]
         [Route("Disciplines/{facId}")]
+        [AllowAnonymous]
         public IActionResult GetDisciplines([FromRoute]int facId)
         {
             if (_curriculumRepository.GetFaculty(facId) == null)
@@ -68,6 +73,7 @@ namespace JournalManager.Controllers
 
         [HttpGet]
         [Route("Discipline/{id}")]
+        [AllowAnonymous]
         public IActionResult GetDiscipline([FromRoute]int id)
         {
             var discipline = _curriculumRepository.GetDiscipline(id);
@@ -81,7 +87,8 @@ namespace JournalManager.Controllers
 
         [HttpPost]
         [Route("Request/Submit")]
-        public IActionResult SubmitRequest(Request request)
+        [Authorize(Roles = "User")]
+        public IActionResult SubmitRequest([FromBody]Request request)
         {
             var status = _requestRepository.AddRequest(request);
             if (status.Message != Strings.OK)
