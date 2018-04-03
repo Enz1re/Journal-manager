@@ -1,8 +1,11 @@
 Frontend/node_modules/*
 Frontend/app/**/*.js
 Frontend/app/**/*.map
-Frontend/*.log
+Frontend/**/*.log
 Frontend/data/*
 Frontend/public/*
 Backend/JournalManager/bin/*
 Backend/JournalManager/obj/*
+Backend/JournalManager/JournalManager.Data/obj/*
+Backend/JournalManager/JournalManager.Data/bin/*
+Backend/JournalManager/.vs/*
