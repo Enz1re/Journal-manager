@@ -1,5 +1,6 @@
 ﻿using JournalManager.Data.Models.Data;
 using JournalManager.Data.Models.Business;
+using System.Collections.Generic;
 
 namespace JournalManager.Data.Interfaces
 {
@@ -10,6 +11,8 @@ namespace JournalManager.Data.Interfaces
         UserStatus GetUser(int id);
 
         UserStatus FindUser(string username, string password);
+
+        IEnumerable<User> GetTutors();
 
         bool MakeTutor(User user);
     }

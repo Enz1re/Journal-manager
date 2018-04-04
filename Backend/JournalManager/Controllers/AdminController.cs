@@ -29,6 +29,13 @@ namespace JournalManager.Controllers
             return Ok(_requestRepository.GetPendingRequests());
         }
 
+        [HttpGet]
+        [Route("Tutors")]
+        public IActionResult GetTutors()
+        {
+            return Ok(_userRepository.GetTutors());
+        }
+
         [HttpPost]
         [Route("Request/Accept")]
         public IActionResult AcceptRequest(Request request)

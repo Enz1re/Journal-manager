@@ -2,6 +2,7 @@
 using JournalManager.Data.Models.Business;
 using JournalManager.Data.Interfaces;
 using JournalManager.Data.Models.Data;
+using System.Collections.Generic;
 
 namespace JournalManager.Data.Repositories
 {
@@ -44,6 +45,11 @@ namespace JournalManager.Data.Repositories
             }
 
             return UserStatus.OK(user);
+        }
+
+        public IEnumerable<User> GetTutors()
+        {
+            return Records.Where(u => u.Role == Role.Tutor).ToArray();
         }
 
         public bool MakeTutor(User user)
