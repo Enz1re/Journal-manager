@@ -17,7 +17,7 @@ namespace JournalManager.Data.Models.Data
 
         public Term()
         {
-            Tutors=new List<User>();
+            Tutors = new List<User>();
         }
     }
 }

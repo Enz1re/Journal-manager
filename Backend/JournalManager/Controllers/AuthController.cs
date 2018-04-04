@@ -4,16 +4,10 @@ using JournalManager.Data.Models.Data;
 using JournalManager.Data.Constants;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
+using JournalManager.Data.Models.Request;
 
 namespace JournalManager.Controllers
 {
-    public class U
-    {
-        public string Username { get; set; }
-
-        public string Password { get; set; }
-    }
-
     [Produces("application/json")]
     [Route("api/Auth")]
     [AllowAnonymous]
@@ -30,29 +24,30 @@ namespace JournalManager.Controllers
 
         [HttpPost]
         [Route("Login")]
-        public IActionResult Login([FromBody]U obj)
+        public IActionResult Login([FromBody]LoginRequestModel login)
         {
-            var status = _userRepository.FindUser(obj.Username, obj.Password);
+            var status = _userRepository.FindUser(login.Username, login.Password);
             if (status.Message != Strings.OK)
             {
                 return BadRequest(new { message = status.Message });
             }
 
-            return Ok(new { access_token = _jwt.GenerateToken(obj.Username, Enum.GetName(typeof(Role), status.User.Role)) });
+            return Ok(new { access_token = _jwt.GenerateToken(login.Username, Enum.GetName(typeof(Role), status.User.Role)) });
         }
 
         [HttpPost]
         [Route("Register")]
         [AllowAnonymous]
-        public IActionResult Register(string firstname, string secondname, string patronymic, string username, string password)
+        public IActionResult Register([FromBody]RegisterRequestModel register)
         {
             var user = new User
             {
-                Username = username,
-                Password = password,
-                FirstName = firstname,
-                SecondName = secondname,
-                Patronymic = patronymic
+                Username = register.Username,
+                Password = register.Password,
+                FirstName = register.FirstName,
+                SecondName = register.SecondName,
+                Patronymic = register.Patronymic,
+                Role = Role.User
             };
 
             var status = _userRepository.AddUser(user);
@@ -61,7 +56,7 @@ namespace JournalManager.Controllers
                 return BadRequest(status.Message);
             }
 
-            return Ok(new { access_token = _jwt.GenerateToken(username, Enum.GetName(typeof(Role), status.User.Role)) });
+            return Ok(new { access_token = _jwt.GenerateToken(register.Username, Enum.GetName(typeof(Role), status.User.Role)) });
         }
     }
 }

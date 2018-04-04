@@ -8,4 +8,4 @@ Backend/JournalManager/bin/*
 Backend/JournalManager/obj/*
 Backend/JournalManager/JournalManager.Data/obj/*
 Backend/JournalManager/JournalManager.Data/bin/*
-Backend/JournalManager/.vs/*
+Backend/.vs/*

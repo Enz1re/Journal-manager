@@ -60,10 +60,10 @@ namespace JournalManager.Controllers
 
             return Ok();
         }
-        
+
         [HttpPost]
-        [Route("{yearlabel}")]
-        public IActionResult CreateYear(string yearLabel)
+        [Route("Create/Year/{yearLabel}")]
+        public IActionResult CreateYear([FromRoute]string yearLabel)
         {
             var status = _curriculumRepository.CreateYear(yearLabel);
             if (status.Message != Strings.OK)
@@ -75,7 +75,7 @@ namespace JournalManager.Controllers
         }
 
         [HttpPost]
-        [Route("{facultyid}/{disciplinename}/{terms}")]
+        [Route("Create/Discipline")]
         public IActionResult CreateDiscipline(int facultyid, string facultyName, string disciplineName, Term[] terms)
         {
             var status = _curriculumRepository.CreateDiscipline(facultyid, facultyName, disciplineName, terms);
@@ -88,7 +88,7 @@ namespace JournalManager.Controllers
         }
 
         [HttpPost]
-        [Route("{year}/{facultyname}")]
+        [Route("Create/Faculty")]
         public IActionResult CreateFaculty(string year, string facultyName)
         {
             var status = _curriculumRepository.CreateFaculty(year, facultyName);
