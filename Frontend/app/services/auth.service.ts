@@ -3,7 +3,7 @@ import { Injectable } from "@angular/core";
 import { Observable } from "rxjs/Observable";
 import 'rxjs/add/operator/map';
 
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpResponse } from "@angular/common/http";
 
 import { User } from "../models/User";
 
@@ -16,16 +16,18 @@ export class AuthService {
 
     }
 
-    logIn(username: string, password: string, role: string) {
-        if (username.toLowerCase() === 'admin' && password.toLowerCase() === 'admin') {
-            const user = new User(username, username, username);
-            this.currentUser = user;
-			user.id = 420;
-			user.role = role;
-            return user;
-        } else {
-            return null;
-        }
+    register(firstName: string, secondName: string, patronymic: string, username: string, password: string): Observable<any> {
+        return this.http.post("http://localhost:62774/api/Auth/Register", {
+            firstName: firstName,
+            secondName: secondName,
+            patronymic: patronymic,
+            username: username,
+            password: password
+        }).map((response: HttpResponse<any>) => response.body);
+    }
+
+    logIn(username: string, password: string): Observable<any> {
+        return this.http.post("http://localhost:62774/api/Auth/Login", { username: username, password }).map((response: HttpResponse<any>) => response.body);
     }
 
     logOff() {

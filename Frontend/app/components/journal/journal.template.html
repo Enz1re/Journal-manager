@@ -1,8 +1,8 @@
 <div class="journal-container">
 	<mat-tab-group color="primary">
-		<mat-tab *ngFor="let term of _terms" label="{{term.type}} {{term.number}}">
+		<mat-tab *ngFor="let term of _terms" label="{{term.termNumber}} {{term.termName}}">
 			<div class="journal">
-				<iframe align="middle" [src]="sanitize(term.spreadsheet)">
+				<iframe align="middle" [src]="sanitize(term.spreadsheetUrl)">
 				</iframe>
 			</div>
 		</mat-tab>

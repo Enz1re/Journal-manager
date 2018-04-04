@@ -3,11 +3,14 @@ import 'rxjs/add/operator/map';
 
 import { Injectable } from "@angular/core";
 
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpResponse } from "@angular/common/http";
 
 import { Faculty } from "../models/Faculty";
+import { Discipline } from "../models/Discipline";
 import { Request } from "../models/Request";
 import { Term } from "../models/Term";
+import { User } from "../models/User";
+import { YearData } from "../models/YearData";
 
 
 @Injectable()
@@ -16,19 +19,64 @@ export class HttpService {
 
     }
 
-    getYears(): Observable<string[]> {
-        return this.http.get("../../data/years.json").map((response: any) => <string[]>response.years);
+    /**
+     * Data
+     */
+    getYearData(): Observable<YearData> {
+        return this.http.get(`http://localhost:62774/api/Data/Year`);
     }
 
-    getCurrentYear(): Observable<string> {
-        return this.http.get("../../data/appconstants.json").map((response: any) => <string>response.appconstants.currentYear);
+    getFaculties(yearId: number): Observable<any[]> {
+        return this.http.get(`http://localhost:62774/api/Data/Faculties/${yearId}`)
+            .map((response: any) => response.faculties);
     }
 
-    getFaculties(year: string): Observable<Faculty[]> {
-        return this.http.get("../../data/faculties.json").map((response: any) => <Faculty[]>response[year].faculties);
+    getFaculty(id: number): Observable<Faculty> {
+        return this.http.get(`http://localhost:62774/api/Data/Faculty/${id}`)
+            .map((response: Faculty) => response);
     }
 
-	getPendingRequests(): Observable<Request[]> {
-		return this.http.get("../../data/requests.json").map((response: any) => <Request[]>response.requests);
-	}
+    getDisciplines(facultyId: number): Observable<any[]> {
+        return this.http.get(`http://localhost:62774/api/Data/Disciplines/${facultyId}`)
+            .map((response: any) => response.disciplines);
+    }
+
+    getDiscipline(id: number): Observable<Discipline> {
+        return this.http.get(`http://localhost:62774/api/Data/Discipline/${id}`)
+            .map((response: Discipline) => response);
+    }
+
+    /**
+     * Admin
+     */
+    getPendingRequests(): Observable<Request[]> {
+        return this.http.get("http://localhost:62774/api/Admin/Request/Pending").map((response: HttpResponse<Request[]>) => response.body);
+    }
+
+    getTutors(): Observable<User[]> {
+        return this.http.get("http://localhost:62774/api/Admin/Tutors").map((response: HttpResponse<User[]>) => response.body);
+    }
+
+    acceptPendingRequest(request: Request): Observable<any> {
+        return this.http.post("http://localhost:62774/api/Admin/Request/Accept", { request: request }).map((response: HttpResponse<any>) => response.body);
+    }
+
+    declinePendingRequest(request: Request): Observable<any> {
+        return this.http.post("http://localhost:62774/api/Admin/Request/Decline", { request: request }).map((response: HttpResponse<any>) => response.body);
+    }
+
+    createYear(yearLabel: string): Observable<any> {
+        return this.http.post(`http://localhost:62774/api/Admin/Create/Year/${yearLabel}`, {})
+            .map((response: HttpResponse<any>) => response.body);
+    }
+
+    createDiscipline(facId: number, facName: string, discName: string, terms: Term[]): Observable<any> {
+        return this.http.post("http://localhost:62774/api/Admin/Create/Discipline", { facultyId: facId, facultyName: facName, disciplineName: discName, terms: terms })
+            .map((response: HttpResponse<any>) => response.body);
+    }
+
+    createFaculty(year: string, facName: string): Observable<any> {
+        return this.http.post("http://localhost:62774/api/Admin/Create/Faculty", { year: year, facultyName: facName })
+            .map((response: HttpResponse<any>) => response.body);
+    }
 }

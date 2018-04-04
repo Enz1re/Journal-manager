@@ -10,8 +10,8 @@
 	</div>
 	<div class="year-select-container">
 		<mat-form-field>
-			<mat-select [(value)]="_selectedYear" (selectionChange)="changeYear($event)">
-				<mat-option *ngFor="let year of _years" [value]="year">{{year}}</mat-option>
+			<mat-select [(value)]="_selectedYear.label" (selectionChange)="changeYear($event)">
+				<mat-option *ngFor="let year of _years" [value]="year.label">{{year.label}}</mat-option>
 			</mat-select>
 	 	</mat-form-field>
 	</div>
@@ -32,12 +32,12 @@
   		<div class="sidenav-container">
   			<div class="expansion-panel-container">
 	  			<mat-accordion>
-					<mat-expansion-panel *ngFor="let faculty of _faculties" [expanded]="faculty.id === _currentFacultyId">
+					<mat-expansion-panel *ngFor="let faculty of _faculties" [expanded]="faculty.id === _currentFacultyId" (opened)="onFacultyOpened(faculty)">
 					    <mat-expansion-panel-header>
 							<mat-panel-title>{{faculty.name}}</mat-panel-title>
 						</mat-expansion-panel-header>
 						<ng-template matExpansionPanelContent>
-							<mat-list *ngFor="let discipline of faculty.disciplines">
+							<mat-list *ngFor="let discipline of _disciplines">
 								<mat-list-item>
 									<button (click)="goToJournal(faculty.id, discipline.id);" 
 											 mat-raised-button [disabled]="discipline.id === _currentDisciplineId">{{discipline.name}}</button>
