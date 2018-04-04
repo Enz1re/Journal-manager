@@ -6,11 +6,11 @@ namespace JournalManager.Data.Interfaces
 {
     public interface IСurriculumRepository
     {
-        string GetYear(int id);
+        Year GetYear(int id);
 
-        string GetCurrentYear();
+        Year GetCurrentYear();
 
-        IEnumerable<string> GetYears();
+        IEnumerable<Year> GetYears();
 
         CurriculumStatus CreateYear(string yearLabel);
 

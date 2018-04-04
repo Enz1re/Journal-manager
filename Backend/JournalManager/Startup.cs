@@ -53,7 +53,12 @@ namespace JournalManager
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            app.UseCors("AllowAll");
+            app.UseCors(config =>
+            {
+                config.AllowAnyHeader();
+                config.AllowAnyMethod();
+                config.AllowAnyOrigin();
+            });
             app.UseAuthentication();
             app.UseMvc();
         }

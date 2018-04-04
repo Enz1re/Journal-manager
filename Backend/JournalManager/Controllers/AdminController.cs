@@ -1,6 +1,7 @@
 ﻿using JournalManager.Data.Constants;
 using JournalManager.Data.Interfaces;
 using JournalManager.Data.Models.Data;
+using JournalManager.Data.Models.Request;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -38,7 +39,7 @@ namespace JournalManager.Controllers
 
         [HttpPost]
         [Route("Request/Accept")]
-        public IActionResult AcceptRequest(Request request)
+        public IActionResult AcceptRequest([FromBody]Request request)
         {
             var status = _requestRepository.RemoveRequest(request.Id);
             if (status.Message != Strings.OK)
@@ -57,7 +58,7 @@ namespace JournalManager.Controllers
 
         [HttpPost]
         [Route("Request/Decline")]
-        public IActionResult DeclineRequest(Request request)
+        public IActionResult DeclineRequest([FromBody]Request request)
         {
             var status = _requestRepository.RemoveRequest(request.Id, false);
             if (status.Message != Strings.OK)
@@ -83,9 +84,9 @@ namespace JournalManager.Controllers
 
         [HttpPost]
         [Route("Create/Discipline")]
-        public IActionResult CreateDiscipline(int facultyid, string facultyName, string disciplineName, Term[] terms)
+        public IActionResult CreateDiscipline([FromBody]DisciplineRequestModel discipline)
         {
-            var status = _curriculumRepository.CreateDiscipline(facultyid, facultyName, disciplineName, terms);
+            var status = _curriculumRepository.CreateDiscipline(discipline.FacultyId, discipline.FacultyName, discipline.DisciplineName, discipline.Terms);
             if (status.Message != Strings.OK)
             {
                 return BadRequest(status.Message);
@@ -96,9 +97,9 @@ namespace JournalManager.Controllers
 
         [HttpPost]
         [Route("Create/Faculty")]
-        public IActionResult CreateFaculty(string year, string facultyName)
+        public IActionResult CreateFaculty([FromBody]FacultyRequestModel faculty)
         {
-            var status = _curriculumRepository.CreateFaculty(year, facultyName);
+            var status = _curriculumRepository.CreateFaculty(faculty.Year, faculty.FacultyName);
             if (status.Message != Strings.OK)
             {
                 return BadRequest(status.Message);

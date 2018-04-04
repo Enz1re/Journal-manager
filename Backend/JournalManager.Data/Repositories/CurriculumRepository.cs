@@ -3,6 +3,7 @@ using System.Linq;
 using JournalManager.Data.Interfaces;
 using JournalManager.Data.Models.Business;
 using JournalManager.Data.Models.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace JournalManager.Data.Repositories
 {
@@ -15,19 +16,19 @@ namespace JournalManager.Data.Repositories
             _db = db;
         }
 
-        public string GetYear(int id)
+        public Year GetYear(int id)
         {
-            return _db.Years.Find(id)?.Label;
+            return _db.Years.Find(id);
         }
 
-        public string GetCurrentYear()
+        public Year GetCurrentYear()
         {
-            return _db.Years.Last().Label;
+            return _db.Years.Last();
         }
 
-        public IEnumerable<string> GetYears()
+        public IEnumerable<Year> GetYears()
         {
-            return _db.Years.Select(y => y.Label);
+            return _db.Years.ToArray();
         }
 
         public CurriculumStatus CreateYear(string yearLabel)
@@ -45,12 +46,15 @@ namespace JournalManager.Data.Repositories
 
         public Discipline GetDiscipline(int id)
         {
-            return _db.Disciplines.Find(id);
+            return _db.Disciplines.Include(d => d.Terms).FirstOrDefault(d => d.Id == id);
         }
 
         public IEnumerable<ListItem> GetDisciplineList(int facultyId)
         {
-            return _db.Faculties.Find(facultyId).Disciplines.Select(d => new ListItem { Id = d.Id, Name = d.Name });
+            return _db.Faculties.Include(f => f.Disciplines)
+                                .FirstOrDefault(f => f.Id == facultyId)
+                                .Disciplines
+                                .Select(d => new ListItem { Id = d.Id, Name = d.Name });
         }
 
         public CurriculumStatus CreateDiscipline(int facultyid, string facultyName, string disciplineName, Term[] terms)
@@ -81,7 +85,10 @@ namespace JournalManager.Data.Repositories
 
         public IEnumerable<ListItem> GetFacultyList(int yearId)
         {
-            return _db.Years.Find(yearId).Faculties.Select(f => new ListItem { Id = f.Id, Name = f.Name });
+            return _db.Years.Include(y => y.Faculties)
+                            .FirstOrDefault(y => y.Id == yearId)
+                            .Faculties
+                            .Select(f => new ListItem { Id = f.Id, Name = f.Name });
         }
 
         public CurriculumStatus CreateFaculty(string year, string facultyName)

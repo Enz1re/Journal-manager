@@ -41,7 +41,7 @@ namespace JournalManager.Controllers
                 return BadRequest(Strings.NoSuchYear(yearId.ToString()));
             }
 
-            return Ok(new { faculties = _curriculumRepository.GetFacultyList(yearId)});
+            return Ok(new { faculties = _curriculumRepository.GetFacultyList(yearId) });
         }
 
         [HttpGet]

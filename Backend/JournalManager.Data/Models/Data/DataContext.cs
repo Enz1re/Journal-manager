@@ -31,7 +31,8 @@ namespace JournalManager.Data.Models.Data
                 Users.Add(new User
                 {
                     Username = "user",
-                    Password = "user"
+                    Password = "user",
+                    Role = Role.User
                 });
                 Users.Add(new User
                 {
@@ -58,11 +59,13 @@ namespace JournalManager.Data.Models.Data
                                 new Term
                                 {
                                     TermNumber = 1,
+                                    TermName = "Семестр",
                                     SpreadsheetUrl = "https://docs.google.com/spreadsheets/d/1clZDT94GIx7LVm4HSMzBtmsqsP3RlzNFKqc5ctQBSO8/"
                                 },
                                 new Term
                                 {
                                     TermNumber = 2,
+                                    TermName = "Семестр",
                                     SpreadsheetUrl = "https://docs.google.com/spreadsheets/d/1clZDT94GIx7LVm4HSMzBtmsqsP3RlzNFKqc5ctQBSO8/",
                                 }
                             }
@@ -75,9 +78,9 @@ namespace JournalManager.Data.Models.Data
                                 new Term
                                 {
                                     TermNumber = 1,
+                                    TermName = "Семестр",
                                     SpreadsheetUrl = "https://docs.google.com/spreadsheets/d/1clZDT94GIx7LVm4HSMzBtmsqsP3RlzNFKqc5ctQBSO8/"
                                 },
-
                             }
                         }
                     }
@@ -96,16 +99,13 @@ namespace JournalManager.Data.Models.Data
                                 new Term
                                 {
                                     TermNumber = 1,
+                                    TermName = "Семестр",
                                     SpreadsheetUrl = "https://docs.google.com/spreadsheets/d/1clZDT94GIx7LVm4HSMzBtmsqsP3RlzNFKqc5ctQBSO8/"
                                 },
                                 new Term
                                 {
                                     TermNumber = 2,
-                                    SpreadsheetUrl = "https://docs.google.com/spreadsheets/d/1clZDT94GIx7LVm4HSMzBtmsqsP3RlzNFKqc5ctQBSO8/"
-                                },
-                                new Term
-                                {
-                                    TermNumber = 3,
+                                    TermName = "Семестр",
                                     SpreadsheetUrl = "https://docs.google.com/spreadsheets/d/1clZDT94GIx7LVm4HSMzBtmsqsP3RlzNFKqc5ctQBSO8/"
                                 }
                             }

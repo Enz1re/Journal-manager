@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Newtonsoft.Json;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace JournalManager.Data.Models.Data
@@ -17,6 +18,7 @@ namespace JournalManager.Data.Models.Data
         public string Username { get; set; }
 
         [Required]
+        [JsonIgnore]
         public string Password { get; set; }
         
         public Role Role { get; set; }
