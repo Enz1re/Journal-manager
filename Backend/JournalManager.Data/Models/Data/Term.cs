@@ -9,12 +9,11 @@ namespace JournalManager.Data.Models.Data
         public int Id { get; set; }
 
         [Required]
-        public int TermNumber { get; set; }
+        public int Number { get; set; }
 
         [Required]
-        public string TermName { get; set; }
+        public string Type { get; set; }
 
-        [JsonIgnore]
         public List<User> Tutors { get; set; }
 
         [Required]

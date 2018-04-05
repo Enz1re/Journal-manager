@@ -11,7 +11,7 @@ namespace JournalManager.Data.Models.Data
         public DateTime Date { get; set; }
 
         [Required]
-        public User Issuer { get; set; }
+        public int IssuerId { get; set; }
 
         [Required]
         public string Title { get; set; }

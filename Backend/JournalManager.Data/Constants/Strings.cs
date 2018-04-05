@@ -12,11 +12,13 @@ namespace JournalManager.Data.Constants
 
         public static string NoSuchYear(string yearLabel) => $"No such year: {yearLabel}";
 
-        public static string SuchFacultyExists(string facultyName) => $"Such faculty already exists: ${facultyName}";
+        public static string SuchFacultyExists(string facultyName) => $"Such faculty already exists: {facultyName}";
 
         public static string NoSuchFaculty(string facultyName) => $"No such faculty: {facultyName}";
 
         public static string NoSuchDiscipline(string disciplineName) => $"No such discipline: {disciplineName}";
+
+        public static string DisciplineExists(string disciplineName) => $"Discipline \"{disciplineName}\" already exists";
 
         public static string UserExists(string username) => $"User {username} already exists";
 

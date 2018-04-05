@@ -14,7 +14,7 @@ namespace JournalManager.Data.Repositories
 
         public RequestStatus AddRequest(Request request)
         {
-            if (Records.FirstOrDefault(r => r.Issuer.Username == request.Issuer.Username) != null)
+            if (Records.FirstOrDefault(r => r.IssuerId == request.IssuerId) != null)
             {
                 return RequestStatus.RequestExists;
             }
@@ -42,6 +42,9 @@ namespace JournalManager.Data.Repositories
             {
                 return accept ? RequestStatus.RequestIsAccepted : RequestStatus.RequestIsDeclined;
             }
+
+            Delete(request);
+            SaveChanges();
 
             return RequestStatus.OK;
         }

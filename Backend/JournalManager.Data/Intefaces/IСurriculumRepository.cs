@@ -6,7 +6,7 @@ namespace JournalManager.Data.Interfaces
 {
     public interface IСurriculumRepository
     {
-        Year GetYear(int id);
+        Year GetYear(string label);
 
         Year GetCurrentYear();
 
@@ -18,11 +18,13 @@ namespace JournalManager.Data.Interfaces
 
         IEnumerable<ListItem> GetDisciplineList(int facultyId);
 
-        CurriculumStatus CreateDiscipline(int facultyid, string facultyName, string disciplineName, Term[] terms);
+        CurriculumStatus CreateDiscipline(string facultyName, string disciplineName);
+
+        CurriculumStatus AddTerm(int disciplineId, Term term, IEnumerable<User> tutors);
 
         Faculty GetFaculty(int id);
 
-        IEnumerable<ListItem> GetFacultyList(int yearId);
+        IEnumerable<ListItem> GetFacultyList(string year);
 
         CurriculumStatus CreateFaculty(string year, string facultyName);
     }

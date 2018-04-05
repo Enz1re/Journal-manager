@@ -14,6 +14,6 @@ namespace JournalManager.Data.Interfaces
 
         IEnumerable<User> GetTutors();
 
-        bool MakeTutor(User user);
+        bool MakeTutor(int userId);
     }
 }

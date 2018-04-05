@@ -31,13 +31,15 @@ namespace JournalManager
 
             services.AddAuthentication(options =>
             {
-                options.DefaultScheme = options.DefaultAuthenticateScheme = options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
             })
-            .AddJwtBearer(options =>
+            .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options =>
             {
                 options.SaveToken = true;
                 options.RequireHttpsMetadata = false;
-
+                
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
                     ValidAudience = Configuration["JwtConfig:Audience"],

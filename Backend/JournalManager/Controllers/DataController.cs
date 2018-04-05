@@ -32,16 +32,16 @@ namespace JournalManager.Controllers
         }
 
         [HttpGet]
-        [Route("Faculties/{yearId}")]
+        [Route("Faculties/{year}")]
         [AllowAnonymous]
-        public IActionResult GetFaculties([FromRoute]int yearId)
+        public IActionResult GetFaculties([FromRoute]string year)
         {
-            if (_curriculumRepository.GetYear(yearId) == null)
+            if (_curriculumRepository.GetYear(year) == null)
             {
-                return BadRequest(Strings.NoSuchYear(yearId.ToString()));
+                return BadRequest(Strings.NoSuchYear(year));
             }
 
-            return Ok(new { faculties = _curriculumRepository.GetFacultyList(yearId) });
+            return Ok(new { faculties = _curriculumRepository.GetFacultyList(year) });
         }
 
         [HttpGet]

@@ -1,9 +1,9 @@
 C:\my_files\jm\Backend\JournalManager.Data\bin\Debug\netcoreapp2.0\JournalManager.Data.deps.json
 C:\my_files\jm\Backend\JournalManager.Data\bin\Debug\netcoreapp2.0\JournalManager.Data.dll
 C:\my_files\jm\Backend\JournalManager.Data\bin\Debug\netcoreapp2.0\JournalManager.Data.pdb
-C:\my_files\jm\Backend\JournalManager.Data\obj\Debug\netcoreapp2.0\JournalManager.Data.csprojResolveAssemblyReference.cache
 C:\my_files\jm\Backend\JournalManager.Data\obj\Debug\netcoreapp2.0\JournalManager.Data.csproj.CoreCompileInputs.cache
 C:\my_files\jm\Backend\JournalManager.Data\obj\Debug\netcoreapp2.0\JournalManager.Data.AssemblyInfoInputs.cache
 C:\my_files\jm\Backend\JournalManager.Data\obj\Debug\netcoreapp2.0\JournalManager.Data.AssemblyInfo.cs
 C:\my_files\jm\Backend\JournalManager.Data\obj\Debug\netcoreapp2.0\JournalManager.Data.dll
 C:\my_files\jm\Backend\JournalManager.Data\obj\Debug\netcoreapp2.0\JournalManager.Data.pdb
+C:\my_files\jm\Backend\JournalManager.Data\obj\Debug\netcoreapp2.0\JournalManager.Data.csprojResolveAssemblyReference.cache

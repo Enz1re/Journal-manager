@@ -22,8 +22,6 @@ namespace JournalManager.Data.Models.Data
         public string Password { get; set; }
         
         public Role Role { get; set; }
-
-        public List<Request> PendingRequests { get; set; }
     }
 
     public enum Role 

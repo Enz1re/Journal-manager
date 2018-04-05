@@ -5,6 +5,7 @@ using JournalManager.Data.Constants;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using JournalManager.Data.Models.Request;
+using System.Net;
 
 namespace JournalManager.Controllers
 {
@@ -29,10 +30,12 @@ namespace JournalManager.Controllers
             var status = _userRepository.FindUser(login.Username, login.Password);
             if (status.Message != Strings.OK)
             {
-                return BadRequest(new { message = status.Message });
+                return StatusCode(403, new { message = status.Message });
             }
 
-            return Ok(new { access_token = _jwt.GenerateToken(login.Username, Enum.GetName(typeof(Role), status.User.Role)) });
+            string role = Enum.GetName(typeof(Role), status.User.Role);
+
+            return Ok(new { access_token = _jwt.GenerateToken(login.Username, role), user = status.User });
         }
 
         [HttpPost]
@@ -56,7 +59,7 @@ namespace JournalManager.Controllers
                 return BadRequest(status.Message);
             }
 
-            return Ok(new { access_token = _jwt.GenerateToken(register.Username, Enum.GetName(typeof(Role), status.User.Role)) });
+            return Ok(new { access_token = _jwt.GenerateToken(register.Username, Enum.GetName(typeof(Role), Role.User)), user });
         }
     }
 }

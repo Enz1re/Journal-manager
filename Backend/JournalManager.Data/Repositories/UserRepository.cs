@@ -52,12 +52,13 @@ namespace JournalManager.Data.Repositories
             return Records.Where(u => u.Role == Role.Tutor).ToArray();
         }
 
-        public bool MakeTutor(User user)
+        public bool MakeTutor(int userId)
         {
+            var user = Find(userId);
             user.Role = Role.Tutor;
             Update(user.Id, user);
-
-            return SaveChanges() == 1;
+            int state = SaveChanges();
+            return state == 1;
         }
     }
 }

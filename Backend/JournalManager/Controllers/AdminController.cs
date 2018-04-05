@@ -47,8 +47,8 @@ namespace JournalManager.Controllers
                 return BadRequest(status.Message);
             }
 
-            var issuer = request.Issuer;
-            if (!_userRepository.MakeTutor(issuer))
+            var issuerId = request.IssuerId;
+            if (!_userRepository.MakeTutor(issuerId))
             {
                 return BadRequest(Strings.FailedToAccept);
             }
@@ -79,20 +79,28 @@ namespace JournalManager.Controllers
                 return BadRequest(status.Message);
             }
 
-            return Ok();
+            return Ok(status.CurriculumObject);
         }
 
         [HttpPost]
         [Route("Create/Discipline")]
         public IActionResult CreateDiscipline([FromBody]DisciplineRequestModel discipline)
         {
-            var status = _curriculumRepository.CreateDiscipline(discipline.FacultyId, discipline.FacultyName, discipline.DisciplineName, discipline.Terms);
+            var status = _curriculumRepository.CreateDiscipline(discipline.FacultyName, discipline.DisciplineName);
             if (status.Message != Strings.OK)
             {
                 return BadRequest(status.Message);
             }
 
-            return Ok();
+            return Ok(status.CurriculumObject);
+        }
+
+        [HttpPost]
+        [Route("Create/Term/{disciplineId}")]
+        public IActionResult CreateTerm([FromRoute]int disciplineId, [FromBody]Term term)
+        {
+            var status = _curriculumRepository.AddTerm(disciplineId, term, term.Tutors);
+            return Ok(status.CurriculumObject);
         }
 
         [HttpPost]
@@ -105,7 +113,7 @@ namespace JournalManager.Controllers
                 return BadRequest(status.Message);
             }
 
-            return Ok();
+            return Ok(status.CurriculumObject);
         }
     }
 }
